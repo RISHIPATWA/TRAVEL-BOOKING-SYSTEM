@@ -1,3 +1,35 @@
+// const express = require('express');
+// const mongoose = require('mongoose');
+// const cors = require('cors');
+// const dotenv = require('dotenv');
+
+// dotenv.config();
+
+// const app = express();
+// const PORT = process.env.PORT || 5000;
+
+// // Middleware
+// app.use(cors());
+// app.use(express.json());
+
+// // Connect to MongoDB
+// mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/travel-booking-system')
+// .then(() => console.log('MongoDB connected successfully'))
+// .catch((err) => console.log('MongoDB connection error:', err));
+
+// // Routes
+// app.use('/api/auth', require('./routes/auth.routes'));
+// app.use('/api/bookings', require('./routes/booking.routes'));
+
+// // Basic route
+// app.get('/', (req, res) => {
+//     res.json({ message: 'Travel Booking System API is running!' });
+// });
+
+// app.listen(PORT, () => {
+//     console.log(`Server is running on port ${PORT}`);
+// });
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -6,26 +38,40 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const app = express();
+
+// PORT
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+}));
+
 app.use(express.json());
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/travel-booking-system')
-.then(() => console.log('MongoDB connected successfully'))
-.catch((err) => console.log('MongoDB connection error:', err));
+// Test Route
+app.get('/', (req, res) => {
+    res.status(200).json({
+        success: true,
+        message: 'Travel Booking System API is running successfully!'
+    });
+});
 
 // Routes
 app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/bookings', require('./routes/booking.routes'));
 
-// Basic route
-app.get('/', (req, res) => {
-    res.json({ message: 'Travel Booking System API is running!' });
-});
+// MongoDB Connection + Server Start
+mongoose.connect(process.env.MONGODB_URI)
+.then(() => {
+    console.log('MongoDB connected successfully');
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+    });
+})
+.catch((err) => {
+    console.log('MongoDB connection error:', err);
 });
