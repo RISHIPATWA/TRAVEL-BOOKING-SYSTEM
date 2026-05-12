@@ -24,9 +24,10 @@ const Dashboard = () => {
   const fetchBookings = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('https://travel-booking-api.onrender.com/api/bookings', {
+      const response = await axios.get('https://travel-booking-system-0yyc.onrender.com/api/bookings', {
         headers: { Authorization: `Bearer ${token}` }
       });
+      
       setBookings(response.data.bookings);
     } catch (err) {
       console.error('Error fetching bookings:', err);

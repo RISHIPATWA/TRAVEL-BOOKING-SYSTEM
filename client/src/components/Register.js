@@ -19,14 +19,14 @@ const Register = () => {
       [e.target.name]: e.target.value
     });
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
     try {
-      await axios.post('https://travel-booking-api.onrender.com/api/auth/register', formData);
+      await axios.post('https://travel-booking-system-0yyc.onrender.com/api/auth/register', formData);
       navigate('/login');
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
