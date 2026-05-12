@@ -24,7 +24,7 @@ const Dashboard = () => {
   const fetchBookings = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/bookings', {
+      const response = await axios.get('https://travel-booking-api.onrender.com/api/bookings', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setBookings(response.data.bookings);
@@ -49,11 +49,11 @@ const Dashboard = () => {
       const token = localStorage.getItem('token');
       
       if (editingId) {
-        await axios.put(`http://localhost:5000/api/bookings/${editingId}`, formData, {
+        await axios.put(`https://travel-booking-api.onrender.com/api/bookings/${editingId}`, formData, {
           headers: { Authorization: `Bearer ${token}` }
         });
       } else {
-        await axios.post('http://localhost:5000/api/bookings', formData, {
+        await axios.post('https://travel-booking-api.onrender.com/api/bookings', formData, {
           headers: { Authorization: `Bearer ${token}` }
         });
       }
@@ -91,7 +91,7 @@ const Dashboard = () => {
     if (window.confirm('Are you sure you want to delete this booking?')) {
       try {
         const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:5000/api/bookings/${id}`, {
+        await axios.delete(`https://travel-booking-api.onrender.com/api/bookings/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         fetchBookings();
